@@ -25,9 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.users = users;
     }
 
-    /**
-     * Loads the user from the DB and converts it to Spring Security's internal User oobject
-     */
+    //Loads the user from the DB and converts it to Spring Security's internal User object
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AppUser user = users.findByUsername(username)
