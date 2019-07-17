@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
-import { Router} from '@angular/router';
-import { ActivatedRoute} from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -18,30 +16,25 @@ export class LoginFormComponent implements OnInit {
   
   constructor(
     private http : HttpClient,
-    private router : Router,
-    private route : ActivatedRoute
   ) { }
 
   ngOnInit() {
     sessionStorage.setItem('token', '');
 }
 
-  login() {
+  onSubmit() {
       let url = environment.apiUrl + '/auth/signin';
       this.http.post<Observable<boolean>>(url, {
         username: this.model.username,
         password: this.model.password
-    }).subscribe(isValid => {
-        if (isValid) {
-            sessionStorage.setItem(
-              'token', 
-              btoa(this.model.username + ':' + this.model.password)
-            );
-        this.router.navigate(['']);
-        } else {
-            alert("Authentication failed.")
-        }
-    });
+    }).subscribe(res => this.storeToken(JSON.stringify(res.token))); {
+    };
+  }
+
+  storeToken(res) {
+    sessionStorage.setItem(
+      'token', res
+    )
   }
 
 }
