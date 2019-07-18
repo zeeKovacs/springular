@@ -24,7 +24,7 @@ export class LoginFormComponent implements OnInit {
 
   onSubmit() {
       let url = environment.apiUrl + '/auth/signin';
-      this.http.post<Observable<boolean>>(url, {
+      this.http.post<any>(url, {
         username: this.model.username,
         password: this.model.password
     }).subscribe(res => this.storeToken(JSON.stringify(res.token))); {
