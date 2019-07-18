@@ -13,6 +13,8 @@ import { environment } from 'src/environments/environment';
 })
 export class LoginFormComponent implements OnInit {
   model : any = {};
+  cantLogin : boolean = false;
+  errorMessage : string;
   
   constructor(
     private http : HttpClient,
@@ -27,14 +29,23 @@ export class LoginFormComponent implements OnInit {
       this.http.post<any>(url, {
         username: this.model.username,
         password: this.model.password
-    }).subscribe(res => this.storeToken(JSON.stringify(res.token))); {
+    }).subscribe(res => this.storeToken(JSON.stringify(res.token)),
+    error => this.handleError(error)); {
     };
   }
 
+
   storeToken(res) {
+    this.cantLogin = false;
     sessionStorage.setItem(
       'token', res
     )
   }
 
+  handleError(error){
+    this.cantLogin = true;
+    this.errorMessage = error;
+
+  }
+  
 }
