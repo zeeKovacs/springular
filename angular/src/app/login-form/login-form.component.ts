@@ -15,6 +15,7 @@ export class LoginFormComponent implements OnInit {
   model : any = {};
   cantLogin : boolean = false;
   errorMessage : string;
+  isLoggedIn : boolean = false;
   
   constructor(
     private http : HttpClient,
@@ -37,6 +38,7 @@ export class LoginFormComponent implements OnInit {
 
   storeToken(res) {
     this.cantLogin = false;
+    this.isLoggedIn = true;
     sessionStorage.setItem(
       'token', res
     )
@@ -44,7 +46,10 @@ export class LoginFormComponent implements OnInit {
 
   handleError(error){
     this.cantLogin = true;
-    this.errorMessage = error;
+    console.log(JSON.stringify(error));
+    console.log(error.message);
+
+    this.errorMessage = error.error ;
 
   }
   
