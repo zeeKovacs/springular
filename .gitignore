@@ -3,6 +3,8 @@ target
 *.iml
 *.swp
 .factorypath
+.vscode
+dist
 
 # compiled output
 /dist
